@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório PMO — Mentoring Ciclo 17</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --slate: #2d3561;
+    --accent: #c84b31;
+    --gold: #e8a838;
+    --mist: #f0f2f7;
+    --white: #ffffff;
+    --border: #d8dce8;
+    --text-body: #3a3f5c;
+    --text-muted: #7a809e;
+    --green: #2e7d5e;
+    --orange: #c84b31;
+    --yellow-bg: #fff8e8;
+    --red-bg: #fff0ee;
+    --green-bg: #eef7f3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--mist);
+    color: var(--text-body);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .doc-header {
+    background: var(--ink);
+    color: white;
+    padding: 40px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 320px; height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(200,75,49,0.18) 100%);
+  }
+  .doc-header .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .doc-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 600px;
+    margin-bottom: 10px;
+  }
+  .doc-header .subtitle {
+    color: #a8aec8;
+    font-size: 13px;
+    max-width: 560px;
+  }
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+  .meta-item span { color: #a8aec8; display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+
+  /* NAV */
+  .nav-bar {
+    background: var(--slate);
+    padding: 0 48px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-bar button {
+    background: none;
+    border: none;
+    color: #a8b0cc;
+    padding: 13px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-bar button:hover { color: white; }
+  .nav-bar button.active { color: white; border-bottom-color: var(--gold); }
+
+  /* LAYOUT */
+  .page-body { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-header .tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .section-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .section-header p {
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  /* CARDS */
+  .cards { display: grid; gap: 16px; margin-bottom: 24px; }
+  .cards.col-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards.col-2 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 760px) {
+    .cards.col-3, .cards.col-2 { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .card .card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .card p { font-size: 13px; color: var(--text-body); line-height: 1.55; }
+  .card .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+  }
+  .badge-ext { background: #e8f0fe; color: #1a55bf; }
+  .badge-ops { background: #e8f6f0; color: #1a7a50; }
+  .badge-corp { background: #fef3e8; color: #b85a00; }
+  .badge-alto { background: #fff0ee; color: #c84b31; }
+  .badge-medio { background: #fff8e0; color: #9a6800; }
+  .badge-baixo { background: #eef7f3; color: #2e7d5e; }
+  .badge-def { background: var(--ink); color: white; }
+  .badge-dom { background: var(--slate); color: white; }
+  .badge-dep { background: #7a809e; color: white; }
+  .badge-disc { background: #d8dce8; color: var(--slate); }
+  .badge-exig { background: #fff0ee; color: var(--accent); }
+
+  .card .strat {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .card .strat strong { color: var(--ink); }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: white; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  th { background: var(--ink); color: white; padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8f9fc; }
+
+  /* POWER/INTEREST MATRIX */
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .matrix-cell {
+    background: white;
+    padding: 18px;
+    min-height: 140px;
+  }
+  .matrix-cell .mc-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .mc-q1 .mc-label { color: var(--accent); }
+  .mc-q2 .mc-label { color: var(--slate); }
+  .mc-q3 .mc-label { color: var(--green); }
+  .mc-q4 .mc-label { color: var(--text-muted); }
+  .matrix-cell ul { list-style: none; padding: 0; }
+  .matrix-cell li {
+    font-size: 12px;
+    padding: 3px 0;
+    color: var(--text-body);
+    border-bottom: 1px solid #f0f2f7;
+  }
+  .matrix-cell li:last-child { border-bottom: none; }
+  .matrix-axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  /* INSIGHT BOXES */
+  .insight {
+    border-left: 4px solid var(--accent);
+    background: white;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+  .insight.green { border-color: var(--green); }
+  .insight.gold { border-color: var(--gold); }
+  .insight .i-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .insight p { color: var(--text-body); line-height: 1.55; }
+
+  /* GAP TABLE */
+  .gap-row td:first-child { font-weight: 600; color: var(--ink); }
+  .gap-high { color: var(--accent); font-weight: 700; }
+  .gap-med { color: #b85a00; font-weight: 600; }
+  .gap-low { color: var(--green); font-weight: 600; }
+
+  /* TRILHA */
+  .trilha { background: white; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+  .trilha-header {
+    background: var(--ink);
+    color: white;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .trilha-header .t-role { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); }
+  .trilha-header .t-name { font-size: 15px; font-weight: 700; }
+  .trilha-body { padding: 16px 18px; }
+  .trilha-cat {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .trilha-cat:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .trilha-cat .cat-name {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .course-pill {
+    display: inline-block;
+    background: var(--mist);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11.5px;
+    color: var(--slate);
+    margin: 3px 3px 3px 0;
+    font-weight: 500;
+  }
+  .course-pill.priority { background: #fff0ee; border-color: #f0c0b8; color: var(--accent); font-weight: 600; }
+  .course-pill.tech { background: #eef7f3; border-color: #b8e0d0; color: var(--green); font-weight: 600; }
+
+  /* SYNTHESIS */
+  .syn-block {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .syn-block h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .syn-block h3 .num {
+    width: 24px; height: 24px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .syn-block p, .syn-block li { font-size: 13px; color: var(--text-body); line-height: 1.6; margin-bottom: 6px; }
+  .syn-block ul { padding-left: 18px; }
+
+  .kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .kpi {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    min-width: 140px;
+    flex: 1;
+  }
+  .kpi .k-num { font-size: 28px; font-weight: 800; color: var(--ink); line-height: 1; }
+  .kpi .k-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .kpi.red .k-num { color: var(--accent); }
+  .kpi.gold .k-num { color: #b85a00; }
+  .kpi.green .k-num { color: var(--green); }
+
+  /* PRINT-STYLE FOOTER */
+  .doc-footer {
+    background: var(--ink);
+    color: #7a809e;
+    text-align: center;
+    padding: 18px;
+    font-size: 11px;
+    margin-top: 40px;
+  }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* RESPONSIVE NAV */
+  @media (max-width: 640px) {
+    .doc-header { padding: 24px 20px; }
+    .nav-bar { padding: 0 8px; }
+    .page-body { padding: 20px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="eyebrow">PMI São Paulo · Mentoring Ciclo 17</div>
+  <h1>Relatório Analítico de Governança, PMO e Desenvolvimento de Equipe</h1>
+  <p class="subtitle">Consolidação dos entregáveis do plano de trabalho — Estruturação de modelo de atuação analítico e estratégico para fiscalização técnica de obras públicas</p>
+  <div class="meta-row">
+    <div class="meta-item"><span>Natureza</span>Documento Executivo Sanitizado</div>
+    <div class="meta-item"><span>Stakeholders mapeados</span>19 atores</div>
+    <div class="meta-item"><span>Respondentes</span>~30 fiscais</div>
+    <div class="meta-item"><span>Cursos disponíveis</span>249 (7 categorias)</div>
+    <div class="meta-item"><span>Status</span>Versão Consolidada</div>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="active" onclick="showSection('stakeholders')">1. Mapa de Stakeholders</button>
+  <button onclick="showSection('influencia')">2. Influência e Relações</button>
+  <button onclick="showSection('expectativas')">3. Expectativas</button>
+  <button onclick="showSection('capacitacao')">4. Capacitação</button>
+  <button onclick="showSection('gaps')">5. Gap Analysis</button>
+  <button onclick="showSection('sintese')">6. Síntese Executiva</button>
+</nav>
+
+<div class="page-body">
+
+<!-- ======================== SEÇÃO 1: STAKEHOLDERS ======================== -->
+<div class="section active" id="stakeholders">
+  <div class="section-header">
+    <div class="tag">Entregável 1</div>
+    <h2>Mapa Estruturado das Partes Interessadas</h2>
+    <p>Categorização dos 19 atores mapeados nas três dimensões institucionais do contrato de gerenciamento de obras públicas.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="k-num">13</div><div class="k-label">Stakeholders externos</div></div>
+    <div class="kpi"><div class="k-num">3</div><div class="k-label">Operacionais internos</div></div>
+    <div class="kpi"><div class="k-num">3</div><div class="k-label">Corporativos internos</div></div>
+    <div class="kpi red"><div class="k-num">5</div><div class="k-label">Definitivos ou dominantes críticos</div></div>
+  </div>
+
+  <h3 style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px;">Atores Externos — Órgão Contratante e Cadeia de Execução</h3>
+  <div class="cards col-3">
+    <div class="card">
+      <div class="badge badge-ext">Externo · Estratégico</div>
+      <h3>Órgão Contratante (Alta Administração)</h3>
+      <p>Patrocínio institucional, definição de objetivos macro e tomada de decisão estratégica sobre portfólio de imóveis.</p>
+      <div class="strat"><strong>Engajamento:</strong> Manter Satisfeito · Salience: Definitivo</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Tático</div>
+      <h3>Gestor do Contrato de Gerenciamento</h3>
+      <p>Fiscalização da conformidade do contrato de apoio à gerenciadora. Interface direta com a equipe técnica para reporte de progresso.</p>
+      <div class="strat"><strong>Engajamento:</strong> Gerenciar de Perto · Salience: Dominante</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Tático</div>
+      <h3>Diretoria das Obras</h3>
+      <p>Departamento do órgão responsável pela entrega das obras. Gestão estratégica e financeira com poder formal alto.</p>
+      <div class="strat"><strong>Engajamento:</strong> Manter Informado · Salience: Dominante</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Tático</div>
+      <h3>Gestor do Contrato da Obra (Coordenador)</h3>
+      <p>Responsável pela gestão estratégica e fiscalização global de cada contrato de obra individual.</p>
+      <div class="strat"><strong>Engajamento:</strong> Gerenciar de Perto / Reporte Técnico · Salience: Dominante</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Operacional</div>
+      <h3>Supervisor (Fiscal Órgão)</h3>
+      <p>Supervisão direta das frentes de fiscalização — obras e administrativo. Interface operacional cotidiana com a equipe técnica da gerenciadora.</p>
+      <div class="strat"><strong>Engajamento:</strong> Manter Engajado · Salience: Dependente</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Operacional</div>
+      <h3>Fiscais de Obras e Administrativo</h3>
+      <p>Acompanhamento diário e registro de ocorrências no canteiro. Verificação de conformidade documental e medições financeiras.</p>
+      <div class="strat"><strong>Engajamento:</strong> Manter Engajado · Salience: Discricionário</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Operacional</div>
+      <h3>Empreiteiras</h3>
+      <p>Empresas responsáveis pela execução física. Baixo poder formal, mas alta urgência operacional — principal fonte de não conformidades identificadas.</p>
+      <div class="strat"><strong>Engajamento:</strong> Monitorar e Controlar Urgências · Salience: Exigente</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Operacional</div>
+      <h3>Projetistas</h3>
+      <p>Responsáveis pelos projetos técnicos e revisões. Suporte especializado para resolução de interferências técnicas.</p>
+      <div class="strat"><strong>Engajamento:</strong> Monitorar / Alinhamento Técnico · Salience: Discricionário</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Regulatório</div>
+      <h3>Concessionárias e Órgãos Públicos</h3>
+      <p>Aprovações, vistorias e regularizações legais. Alto poder formal latente, mas baixo interesse rotineiro — risco de travamento em fases específicas.</p>
+      <div class="strat"><strong>Engajamento:</strong> Monitorar Potencial de Poder · Salience: Adormecido</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ext">Externo · Operacional Local</div>
+      <h3>Diretor e Administrador do Prédio com Obra</h3>
+      <p>Gestão estratégica e operacional do edifício. Baixo poder formal, mas alta influência política sobre percepção do sucesso da intervenção.</p>
+      <div class="strat"><strong>Engajamento:</strong> Manter Satisfeito / Negociar · Salience: Dependente</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+  <h3 style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px;">Atores Operacionais Internos — Equipe da Gerenciadora (Contratada)</h3>
+  <div class="cards col-3">
+    <div class="card">
+      <div class="badge badge-ops">Operacional Interno</div>
+      <h3>Coordenação Técnica</h3>
+      <p>Interface com gestor e fiscais do contratante. Padronização dos procedimentos, consolidação dos produtos e supervisão geral.</p>
+      <div class="strat"><strong>Engajamento:</strong> Engajamento Ativo / Liderança · Salience: Dominante</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ops">Operacional Interno</div>
+      <h3>Supervisão Técnica</h3>
+      <p>Acompanhamento multidisciplinar, apoio às regionais, verificação de qualidade dos produtos e suporte à gestão de riscos técnicos.</p>
+      <div class="strat"><strong>Engajamento:</strong> Manter Satisfeito · Salience: Dominante</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-ops">Operacional Interno</div>
+      <h3>Equipe Técnica Executora</h3>
+      <p>Engenheiros e arquitetos. Fiscalização in loco, vistorias, relatórios e pareceres. Principal elo entre canteiro e documentação.</p>
+      <div class="strat"><strong>Engajamento:</strong> Monitorar / Apoio Técnico · Salience: Discricionário</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+  <h3 style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px;">Atores Corporativos Internos — Estrutura da Gerenciadora</h3>
+  <div class="cards col-3">
+    <div class="card">
+      <div class="badge badge-corp">Corporativo Interno</div>
+      <h3>Alta Administração (Gerenciadora)</h3>
+      <p>Liderança focada em estratégia e gestão dos contratos da empresa. Alto poder formal interno; interesse médio no nível operacional.</p>
+      <div class="strat"><strong>Engajamento:</strong> Reporte Executivo · Salience: Dominante</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-corp">Corporativo Interno</div>
+      <h3>Recursos Humanos</h3>
+      <p>Gestão de pessoas, treinamento e desenvolvimento interno. Parceiro estratégico para execução das trilhas de capacitação propostas.</p>
+      <div class="strat"><strong>Engajamento:</strong> Monitorar / Manter Informado · Salience: Adormecido</div>
+    </div>
+    <div class="card">
+      <div class="badge badge-corp">Corporativo Interno</div>
+      <h3>Área de QSMS</h3>
+      <p>Qualidade, Segurança, Meio Ambiente e Saúde. Responsável pelas conformidades exigidas pelo TR e pelos controles de EPI/EPC.</p>
+      <div class="strat"><strong>Engajamento:</strong> Monitorar / Conformidade · Salience: Discricionário</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SEÇÃO 2: INFLUÊNCIA ======================== -->
+<div class="section" id="influencia">
+  <div class="section-header">
+    <div class="tag">Entregável 2</div>
+    <h2>Matriz de Influência e Relações Institucionais</h2>
+    <p>Cruzamento de Poder vs. Interesse com classificação por nível de engajamento e mapeamento das inter-relações operacionais.</p>
+  </div>
+
+  <div class="matrix-axis">
+    <span>← Interesse Baixo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Interesse Alto →</span>
+    <span style="text-align:right">↑ Poder Alto<br>↓ Poder Baixo</span>
+  </div>
+  <div class="matrix-grid">
+    <div class="matrix-cell mc-q1">
+      <div class="mc-label">🔴 Gerenciar de Perto (Alto/Alto)</div>
+      <ul>
+        <li>Órgão Contratante — Alta Administração</li>
+        <li>Gestor do Contrato de Gerenciamento</li>
+        <li>Diretoria das Obras</li>
+        <li>Gestor do Contrato da Obra</li>
+      </ul>
+    </div>
+    <div class="matrix-cell mc-q2">
+      <div class="mc-label">🟡 Manter Satisfeito (Alto/Baixo)</div>
+      <ul>
+        <li>Concessionárias e Órgãos Públicos</li>
+        <li>Alta Administração (Gerenciadora)</li>
+        <li>Autoridade de Departamento</li>
+      </ul>
+    </div>
+    <div class="matrix-cell mc-q3">
+      <div class="mc-label">🟢 Manter Informado (Baixo/Alto)</div>
+      <ul>
+        <li>Supervisor (Fiscal Órgão)</li>
+        <li>Fiscais de Obras</li>
+        <li>Fiscais Administrativo</li>
+        <li>Empreiteiras</li>
+        <li>Projetistas</li>
+        <li>Coordenação Técnica (Gerenciadora)</li>
+        <li>Supervisão Técnica</li>
+        <li>Equipe Técnica Executora</li>
+      </ul>
+    </div>
+    <div class="matrix-cell mc-q4">
+      <div class="mc-label">⚪ Monitorar (Baixo/Baixo)</div>
+      <ul>
+        <li>Recursos Humanos</li>
+        <li>Área de QSMS</li>
+        <li>Diretor do Prédio com Obra*</li>
+        <li>Administrador do Prédio com Obra*</li>
+      </ul>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--text-muted);margin-bottom:24px;">* Atenção: apesar do poder formal baixo, esses atores possuem influência política ALTA e podem impactar a percepção de sucesso da intervenção. Requerem comunicação operacional frequente mesmo com poder formal baixo.</p>
+
+  <div class="insight gold">
+    <div class="i-label">Alerta de Influência Assimétrica</div>
+    <p>Diretor e Administrador do prédio com obra aparecem no quadrante "Monitorar" pelo poder formal, mas possuem influência política ALTA. São stakeholders <strong>dependentes</strong> no Salience Model — baixo poder, alta legitimidade, alta urgência — e precisam de comunicação operacional constante para não se tornarem focos de conflito local durante a execução.</p>
+  </div>
+
+  <hr class="divider">
+
+  <h3 style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:16px;">Inter-relações Operacionais Críticas</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Relação</th>
+        <th>Tipo de Interface</th>
+        <th>Produto / Fluxo</th>
+        <th>Risco Identificado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Gestor Contrato Gerenciamento → Coordenação Técnica</strong></td>
+        <td>Contratual / Técnica</td>
+        <td>OPS, TAB, OIS, validação de produtos</td>
+        <td>Divergência de expectativas sobre escopo e prazos</td>
+      </tr>
+      <tr>
+        <td><strong>Coordenação Técnica → Supervisão Técnica</strong></td>
+        <td>Interna / Gerencial</td>
+        <td>Delegação de demandas, padrões de qualidade</td>
+        <td>Sobrecarga concentrada nos supervisores</td>
+      </tr>
+      <tr>
+        <td><strong>Supervisão Técnica → Equipe Executora (Fiscais)</strong></td>
+        <td>Operacional Direta</td>
+        <td>RAO, RNC, vistorias, FCT, pareceres</td>
+        <td>Falta de padronização na produção dos relatórios</td>
+      </tr>
+      <tr>
+        <td><strong>Equipe Executora ↔ Empreiteiras</strong></td>
+        <td>Técnica / Operacional</td>
+        <td>Memórias de cálculo, medições, cronogramas</td>
+        <td>Baixa qualidade documental — principal gargalo identificado</td>
+      </tr>
+      <tr>
+        <td><strong>Equipe Executora ↔ Projetistas</strong></td>
+        <td>Técnica</td>
+        <td>Análise de projetos, FCT, pareceres de revisão</td>
+        <td>Inconsistências nos projetos da licitação original</td>
+      </tr>
+      <tr>
+        <td><strong>Equipe Executora → Gestores das Unidades Regionais</strong></td>
+        <td>Institucional / Operacional</td>
+        <td>Comunicação de resultados, alertas de prazo</td>
+        <td>Fluxo interno de tramitação lento para assinatura e validação</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ======================== SEÇÃO 3: EXPECTATIVAS ======================== -->
+<div class="section" id="expectativas">
+  <div class="section-header">
+    <div class="tag">Entregável 3</div>
+    <h2>Matriz de Expectativas</h2>
+    <p>Dores identificadas na pesquisa com a equipe técnica traduzidas nas expectativas de cada grupo de partes interessadas.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi red"><div class="k-num">73%</div><div class="k-label">Citam baixa qualidade documental das empreiteiras como causa-raiz</div></div>
+    <div class="kpi gold"><div class="k-num">68%</div><div class="k-label">Indicam mudanças frequentes de prioridade (nota 4–5)</div></div>
+    <div class="kpi green"><div class="k-num">81%</div><div class="k-label">Ausência de padronização aumenta tempo de validação</div></div>
+    <div class="kpi"><div class="k-num">~30</div><div class="k-label">Fiscais respondentes em 13 regionais diferentes</div></div>
+  </div>
+
+  <div class="insight">
+    <div class="i-label">Principal Causa-Raiz Apurada (Maioria dos Respondentes)</div>
+    <p><strong>Baixa qualidade, incompletude ou falta de padronização nas memórias de cálculo e documentos enviados pelas empreiteiras.</strong> Este gargalo aparece em cascata: gera retrabalho na triagem, atrasa a análise técnica, consome o tempo que seria dedicado à redação do parecer final, comprime prazos e gera entrega de documentos sob pressão.</p>
+  </div>
+
+  <table style="margin-bottom:24px;">
+    <thead>
+      <tr>
+        <th>Grupo de Stakeholder</th>
+        <th>Dor / Gargalo Subjacente</th>
+        <th>Expectativa em relação à fiscalização</th>
+        <th>Indicador de Alinhamento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Órgão Contratante (Alta Administração)</strong></td>
+        <td>Riscos de não conformidade e exposição institucional</td>
+        <td>Controle sistemático, rastreabilidade, relatórios confiáveis e dentro do prazo</td>
+        <td>Nível IMR / ausência de glosas</td>
+      </tr>
+      <tr>
+        <td><strong>Gestor do Contrato de Gerenciamento</strong></td>
+        <td>Dificuldade em ter visão consolidada do andamento das demandas</td>
+        <td>Relatórios padronizados, alertas proativos, previsibilidade de prazos</td>
+        <td>Taxa de entrega no prazo dos produtos do TR</td>
+      </tr>
+      <tr>
+        <td><strong>Diretoria das Obras / Gestores de Contrato de Obra</strong></td>
+        <td>Atraso no ciclo de aprovação de medições e aditivos</td>
+        <td>Pareceres técnicos objetivos, sem vai-e-vem documental, com posicionamento claro</td>
+        <td>Tempo médio de análise de medições</td>
+      </tr>
+      <tr>
+        <td><strong>Supervisor (Fiscal do Órgão)</strong></td>
+        <td>Falta de clareza nos limites decisórios entre equipes</td>
+        <td>Definição clara de responsabilidades, sem duplicidade de análise ou conflito de competências</td>
+        <td>Reuniões de alinhamento periódicas</td>
+      </tr>
+      <tr>
+        <td><strong>Fiscais de Obras e Adm. (Equipe do Órgão)</strong></td>
+        <td>Recebem documentação incompleta; dependem da qualidade da triagem da gerenciadora</td>
+        <td>Triagem prévia robusta pela gerenciadora, checklists claros, comunicação tempestiva</td>
+        <td>Índice de rejeição de documentos na 1ª análise</td>
+      </tr>
+      <tr>
+        <td><strong>Empreiteiras</strong></td>
+        <td>Critérios de validação pouco explícitos; recebem devoluções por motivos variados</td>
+        <td>Critérios de aceitabilidade claros, guia/cartilha de documentação, feedback padronizado</td>
+        <td>Taxa de complementações por demanda</td>
+      </tr>
+      <tr>
+        <td><strong>Coordenação Técnica (Gerenciadora)</strong></td>
+        <td>Prazos comprimidos por acúmulo de demandas simultâneas</td>
+        <td>Fluxo integrado de entregas, gestão centralizada de demandas, rastreabilidade</td>
+        <td>Dashboard de demandas por status</td>
+      </tr>
+      <tr>
+        <td><strong>Equipe Técnica Executora (Fiscais Gerenciadora)</strong></td>
+        <td>Sobrecarga operacional; falta de tempo para análise profunda e redação de relatórios</td>
+        <td>Redução de retrabalho via padronização, templates, automação e priorização clara de demandas</td>
+        <td>Satisfação da equipe / índice de horas extras</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight green">
+    <div class="i-label">Convergência Estratégica</div>
+    <p>Há alinhamento entre o que o contratante espera (rastreabilidade e conformidade) e o que a equipe precisa para entregar (padronização, checklists e redução de retrabalho). A intervenção mais eficaz não é contratar mais pessoas, mas <strong>criar estrutura de processo</strong>: templates, critérios objetivos de aceitabilidade e sistema de gestão de demandas.</p>
+  </div>
+</div>
+
+<!-- ======================== SEÇÃO 4: CAPACITAÇÃO ======================== -->
+<div class="section" id="capacitacao">
+  <div class="section-header">
+    <div class="tag">Entregável 4</div>
+    <h2>Levantamento de Capacitações e Trilhas por Cargo</h2>
+    <p>Cruzamento do perfil da equipe com a Matriz de Competências do TR e proposição de trilhas exclusivamente baseadas no Catálogo Institucional.</p>
+  </div>
+
+  <div class="insight gold">
+    <div class="i-label">Perfil da Equipe (Pesquisa)</div>
+    <p>A equipe é heterogênea: há fiscais com menos de 1 ano de casa e outros com mais de 10 anos. O volume de contratos varia de 1–2 até mais de 15 por profissional. Isso exige <strong>trilhas diferenciadas por nível de senioridade</strong>, não uma capacitação uniforme.</p>
+  </div>
+
+  <div class="trilha">
+    <div class="trilha-header">
+      <div>
+        <div class="t-role">Cargo</div>
+        <div class="t-name">Coordenador Técnico</div>
+      </div>
+    </div>
+    <div class="trilha-body">
+      <div class="trilha-cat">
+        <div class="cat-name">🏗️ EPC — Gestão e Planejamento Técnico</div>
+        <span class="course-pill priority">UDC - Cronograma Executivo de Obra</span>
+        <span class="course-pill priority">UDC - Gestão e Acompanhamento de Matriz de Riscos</span>
+        <span class="course-pill">UDC - Elaboração de Estrutura Analítica de Projeto (EAP)</span>
+        <span class="course-pill">UDC - Valor Agregado</span>
+        <span class="course-pill">UDC - Construção de Matriz de Comunicação</span>
+        <span class="course-pill">UDC - Responsabilidade Civil e Penal dos Líderes de Obra</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">🧠 Comportamental — Liderança e Gestão</div>
+        <span class="course-pill priority">Planejamento do Tempo</span>
+        <span class="course-pill priority">Foco e disciplina: comportamentos para produtividade e resultados</span>
+        <span class="course-pill">Reunião Eficaz</span>
+        <span class="course-pill">Feedback Efetivo</span>
+        <span class="course-pill">Comunicação Efetiva e Relações Humanas</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">💻 Sistema / Técnico — Ferramentas de Gestão</div>
+        <span class="course-pill tech">Análise de Dados no Power BI</span>
+        <span class="course-pill tech">Excel Avançado</span>
+        <span class="course-pill tech">Metodologias Ágeis</span>
+        <span class="course-pill">Microsoft PowerPoint 2016 - Avançado</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">🏛️ Liderança</div>
+        <span class="course-pill">Escola de Gestão</span>
+        <span class="course-pill">A Arte de Liderar</span>
+        <span class="course-pill">Liderança Inspiradora</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="trilha">
+    <div class="trilha-header">
+      <div>
+        <div class="t-role">Cargo</div>
+        <div class="t-name">Supervisores Técnicos (Obras e Projetos)</div>
+      </div>
+    </div>
+    <div class="trilha-body">
+      <div class="trilha-cat">
+        <div class="cat-name">🏗️ EPC — Conhecimento Técnico Multidisciplinar</div>
+        <span class="course-pill priority">UDC - Cronograma, Sua Qualidade e Análise 14 DCMA</span>
+        <span class="course-pill priority">UDC - Elaboração de Composições de Preços Unitários da Construção Civil</span>
+        <span class="course-pill">UDC - Gestão de Desvios de Segurança</span>
+        <span class="course-pill">UDC - Como fazer uma reivindicação de revisão contratual?</span>
+        <span class="course-pill">Análise de Riscos em Projetos EPC</span>
+        <span class="course-pill">UDC - Orçamento Indireto - Parte I</span>
+        <span class="course-pill">UDC Custos Unitários Diretos</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">🧠 Comportamental</div>
+        <span class="course-pill priority">Planejamento do Tempo</span>
+        <span class="course-pill priority">Organização e planejamento</span>
+        <span class="course-pill">Pensamento Crítico</span>
+        <span class="course-pill">Resolução de Conflitos: Estratégias e Ferramentas</span>
+        <span class="course-pill">Guia para Negociação e Persuasão</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">💻 Sistema / Técnico</div>
+        <span class="course-pill tech">Excel Avançado | Hashtag</span>
+        <span class="course-pill tech">Análise de Dados no Power BI</span>
+        <span class="course-pill">Nova Lei de Licitações</span>
+        <span class="course-pill">Encontro Técnico - Metodologias Ágeis aplicadas à Engenharia</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="trilha">
+    <div class="trilha-header">
+      <div>
+        <div class="t-role">Cargo</div>
+        <div class="t-name">Fiscais de Obras (Equipe Técnica Executora)</div>
+      </div>
+    </div>
+    <div class="trilha-body">
+      <div class="trilha-cat">
+        <div class="cat-name">🏗️ EPC — Execução em Campo</div>
+        <span class="course-pill priority">UDC - Acesso e visita ao canteiro</span>
+        <span class="course-pill priority">UDC - 5 Porquês</span>
+        <span class="course-pill">UDC - 5S e PDCA</span>
+        <span class="course-pill">UDC - Trabalho Padronizado</span>
+        <span class="course-pill">UDC - Conceitos de Produtividade</span>
+        <span class="course-pill">UDC - Last Planner System</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">🧠 Comportamental</div>
+        <span class="course-pill priority">Foco e disciplina: comportamentos para produtividade e resultados</span>
+        <span class="course-pill priority">Planejamento do Tempo</span>
+        <span class="course-pill">Simplicidade: Como Focar no que é Importante</span>
+        <span class="course-pill">Trabalho em equipe e capacidade de realização</span>
+        <span class="course-pill">Comunicação Efetiva e Relações Humanas</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">💻 Sistema / Técnico</div>
+        <span class="course-pill tech">Microsoft Excel | Básico</span>
+        <span class="course-pill tech">Microsoft Excel | Intermediário</span>
+        <span class="course-pill tech">Excel Avançado</span>
+        <span class="course-pill">Trabalho Remoto: Como se manter produtivo e gerir o tempo</span>
+        <span class="course-pill">Encontro Técnico | BIM aplicado ao Gerenciamento e Construção</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">🔒 QSMS — Segurança do Trabalho</div>
+        <span class="course-pill">Encontro | Atualização Previdenciária em Segurança do Trabalho</span>
+        <span class="course-pill">Semana da Qualidade Concremat | Espiral do Conhecimento e a Gestão de Riscos</span>
+        <span class="course-pill">Semana da Qualidade Concremat | Melhoria contínua e gestão de mudança</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="trilha">
+    <div class="trilha-header">
+      <div>
+        <div class="t-role">Cargo</div>
+        <div class="t-name">Fiscais de Projetos (Análise Técnica e Compatibilização)</div>
+      </div>
+    </div>
+    <div class="trilha-body">
+      <div class="trilha-cat">
+        <div class="cat-name">🏗️ EPC — Projetos e Orçamentos</div>
+        <span class="course-pill priority">UDC - Elaboração de Composições de Preços Unitários da Construção Civil</span>
+        <span class="course-pill priority">UDC - Cronograma, Sua Qualidade e Análise 14 DCMA</span>
+        <span class="course-pill">Encontro Técnico | BIM aplicado ao Gerenciamento e Construção</span>
+        <span class="course-pill">UDC - Como fazer uma reivindicação de revisão contratual?</span>
+        <span class="course-pill">UDC Custos Unitários Diretos</span>
+        <span class="course-pill">Análise de Riscos em Projetos EPC</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">💻 Sistema / Técnico</div>
+        <span class="course-pill tech">Excel Avançado</span>
+        <span class="course-pill tech">Excel Intermediário | Hashtag</span>
+        <span class="course-pill">Nova Lei de Licitações</span>
+        <span class="course-pill">A Nova Lei de Licitações</span>
+      </div>
+      <div class="trilha-cat">
+        <div class="cat-name">🧠 Comportamental</div>
+        <span class="course-pill">Pensamento Crítico</span>
+        <span class="course-pill">Pensamento Rápido e Devagar: mindsets para resolução de problemas</span>
+        <span class="course-pill">Problem-Solving Skills</span>
+        <span class="course-pill">Planejamento do Tempo</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">🔴 Pílulas em vermelho = prioridade máxima para mitigação dos gargalos identificados. 🟢 Pílulas em verde = recomendações de tecnologia e sistemas. Todas as sugestões são restritas ao catálogo institucional fornecido.</p>
+</div>
+
+<!-- ======================== SEÇÃO 5: GAPS ======================== -->
+<div class="section" id="gaps">
+  <div class="section-header">
+    <div class="tag">Entregável 5</div>
+    <h2>Síntese Analítica de Lacunas (Gap Analysis)</h2>
+    <p>Confronto entre as competências exigidas pelo TR e a realidade operacional apontada pela equipe técnica.</p>
+  </div>
+
+  <div class="insight">
+    <div class="i-label">Metodologia</div>
+    <p>O gap é definido como a distância entre o que o Termo de Referência exige formalmente de cada cargo e o que a equipe aponta como dificuldade real no exercício dessas funções. A severidade considera frequência de citação, impacto no IMR e risco institucional.</p>
+  </div>
+
+  <table class="gap-row" style="margin-bottom:24px;">
+    <thead>
+      <tr>
+        <th>Competência Exigida (TR)</th>
+        <th>Cargo(s) Requeridos</th>
+        <th>Lacuna Identificada</th>
+        <th>Severidade</th>
+        <th>Cursos Indicados do Catálogo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Elaboração de relatórios técnicos (RAO, REL, RIS, PAT…)</strong></td>
+        <td>Todos</td>
+        <td>Sobrecarga operacional reduz o tempo disponível para redação. Relatórios entregues sob pressão, com qualidade variável.</td>
+        <td class="gap-high">ALTO</td>
+        <td>Foco e disciplina: comportamentos para produtividade e resultados · Planejamento do Tempo · Trabalho Remoto: Como se manter produtivo e gerir o tempo</td>
+      </tr>
+      <tr>
+        <td><strong>Controle físico e documental da execução</strong></td>
+        <td>Todos</td>
+        <td>Ausência de padronização na triagem de documentos recebidos. Falta de checklist de aceitabilidade prévia.</td>
+        <td class="gap-high">ALTO</td>
+        <td>UDC - Trabalho Padronizado · UDC - 5S e PDCA · Excel Avançado · Análise de Dados no Power BI</td>
+      </tr>
+      <tr>
+        <td><strong>Análise técnica de projetos e orçamentos</strong></td>
+        <td>Supervisores, Fiscais de Projeto</td>
+        <td>Inconsistências nos projetos de licitação exigem análise complexa. Equipe reporta insuficiência de tempo para análise profunda diante do volume de demandas.</td>
+        <td class="gap-high">ALTO</td>
+        <td>UDC - Cronograma, Sua Qualidade e Análise 14 DCMA · UDC - Elaboração de Composições de Preços Unitários · Análise de Riscos em Projetos EPC</td>
+      </tr>
+      <tr>
+        <td><strong>Controle de procedimentos técnicos (OPS, TAB, OIS, TCS)</strong></td>
+        <td>Coordenador, Supervisores</td>
+        <td>Fluxo interno de tramitação e assinatura junto às supervisões identificado como etapa de maior retenção de prazo.</td>
+        <td class="gap-medio">MÉDIO</td>
+        <td>UDC - Cronograma Executivo de Obra · Reunião Eficaz · Organização e planejamento</td>
+      </tr>
+      <tr>
+        <td><strong>Gerenciamento técnico de obras e projetos</strong></td>
+        <td>Coordenador, Supervisores</td>
+        <td>Falta de sistema centralizado de controle de demandas. Visão parcial do portfólio por ausência de dashboard integrado.</td>
+        <td class="gap-medio">MÉDIO</td>
+        <td>Análise de Dados no Power BI · UDC - Gestão e Acompanhamento de Matriz de Riscos · UDC - Valor Agregado · Metodologias Ágeis</td>
+      </tr>
+      <tr>
+        <td><strong>Realização de vistorias técnicas</strong></td>
+        <td>Supervisores, Fiscais</td>
+        <td>Vistorias são executadas, mas diagnósticos prediais consomem tempo excessivo por falta de formulários padronizados.</td>
+        <td class="gap-medio">MÉDIO</td>
+        <td>UDC - Acesso e visita ao canteiro · UDC - 5 Porquês · UDC - Conceitos de Produtividade</td>
+      </tr>
+      <tr>
+        <td><strong>Segurança do trabalho em obras (EPI, EPC, DDS)</strong></td>
+        <td>Supervisor Obras, Fiscal Obras</td>
+        <td>Competência geralmente presente, mas pouco sistematizada em registros. Risco de não conformidade com NR-18.</td>
+        <td class="gap-baixo">BAIXO</td>
+        <td>UDC - Gestão de Desvios de Segurança · Encontro | Atualização Previdenciária em Segurança do Trabalho</td>
+      </tr>
+      <tr>
+        <td><strong>Conformidade com sistema de gestão QSMS</strong></td>
+        <td>Todos</td>
+        <td>Área de QSMS identificada como stakeholder com baixo engajamento atual. Necessidade de maior integração.</td>
+        <td class="gap-baixo">BAIXO</td>
+        <td>Semana da Qualidade Concremat | Espiral do Conhecimento e a Gestão de Riscos · Semana da Qualidade Concremat | Melhoria contínua e gestão de mudança</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cards col-2">
+    <div class="card">
+      <div class="card-label">Gap Crítico #1 — Temporal / Operacional</div>
+      <h3>Redação sob pressão de prazos</h3>
+      <p>O TR exige elaboração de relatórios técnicos (RAO, REL, RIS, PAT) por toda a equipe. A pesquisa mostra que a sobrecarga operacional consome o tempo de análise profunda, gerando relatórios incompletos — gatilho direto de ocorrências no IMR.</p>
+      <div class="strat"><strong>Intervenção:</strong> Capacitação em produtividade + templates padronizados + redistribuição de prioridades.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Gap Crítico #2 — Sistêmico / Documental</div>
+      <h3>Ausência de sistema de gestão de demandas</h3>
+      <p>A equipe indica unanimemente a necessidade de um sistema centralizado para registro, priorização e rastreamento de todas as demandas. A ausência desta ferramenta cria dependência de comunicação informal e perda de prazos.</p>
+      <div class="strat"><strong>Intervenção:</strong> Capacitação em Power BI / Excel Avançado + proposta de sistema de controle interno.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Gap Crítico #3 — Estrutural / Externo</div>
+      <h3>Qualidade documental das empreiteiras</h3>
+      <p>Gargalo externo não solucionável apenas por capacitação interna. Exige ação combinada: criação de cartilha/checklist de aceitabilidade para as contratadas + protocolo formal de devolução com critérios objetivos.</p>
+      <div class="strat"><strong>Intervenção:</strong> Produto de governança (cartilha) + treinamento em UDC - Trabalho Padronizado.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Gap Crítico #4 — Processual / Institucional</div>
+      <h3>Tramitação interna lenta</h3>
+      <p>O circuito interno de análise, validação e assinatura pelas supervisões é apontado como etapa de retenção de fluxo por múltiplas regionais. Sugere desalinhamento de responsabilidades entre fiscalização e gestão do órgão.</p>
+      <div class="strat"><strong>Intervenção:</strong> Workshop de alinhamento + mapeamento formal do fluxo + Reunião Eficaz.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SEÇÃO 6: SÍNTESE ======================== -->
+<div class="section" id="sintese">
+  <div class="section-header">
+    <div class="tag">Entregável 6 — Relatório Final</div>
+    <h2>Síntese Executiva Consolidada</h2>
+    <p>Como os achados desta análise se conectam às três metas centrais do projeto de mentoring e como endereçá-los de forma integrada.</p>
+  </div>
+
+  <div class="insight">
+    <div class="i-label">Posicionamento Estratégico da Função (Baseado na Conversa com o ChatGPT)</div>
+    <p>A atuação mapeada não é de execução nem de decisão final. É uma função de <strong>produção de visibilidade técnica e governança sobre a execução</strong> — transversal a um portfólio de obras, com características de PMO técnico descentralizado. O modelo de atuação precisa migrar do reativo-operacional para o analítico-estruturado.</p>
+  </div>
+
+  <div class="syn-block">
+    <h3><span class="num">1</span>Governança — Estruturação de Responsabilidades</h3>
+    <p>A pesquisa revela dois déficits de governança simultâneos:</p>
+    <ul>
+      <li><strong>Interno:</strong> falta clareza nos limites decisórios entre fiscalização (gerenciadora) e gestão (órgão), gerando duplicidade de análise e conflitos de competência;</li>
+      <li><strong>Externo:</strong> as empreiteiras desconhecem os critérios de aceitabilidade documental, gerando retrabalho sistemático.</li>
+    </ul>
+    <p style="margin-top:10px;">Recomendações estruturais: (a) elaborar uma <strong>Matriz RACI</strong> interna formalizada, definindo quem aprova, quem executa e quem é consultado em cada etapa do fluxo; (b) produzir uma <strong>cartilha de procedimentos documentais</strong> para as contratadas, como produto do próprio plano de trabalho.</p>
+  </div>
+
+  <div class="syn-block">
+    <h3><span class="num">2</span>PMO (Estratégia e Operacionalização) — Sistematização de Dados</h3>
+    <p>O portfólio de obras públicas gerenciado tem estrutura de Portfólio → Programa → Projetos. A ausência de visão consolidada é o maior risco operacional identificado.</p>
+    <ul>
+      <li>Capacitar a equipe em <strong>Power BI e Excel Avançado</strong> para criação de dashboards de acompanhamento de demandas por status, prazo e regional;</li>
+      <li>Adotar modelo de <strong>registro centralizado de demandas</strong> com campos: tipo, data de entrada, prioridade, responsável, prazo e status;</li>
+      <li>Implementar <strong>reuniões periódicas estruturadas</strong> de alinhamento de portfólio entre coordenação e supervisores, usando pauta padronizada (curso: Reunião Eficaz).</li>
+    </ul>
+  </div>
+
+  <div class="syn-block">
+    <h3><span class="num">3</span>Modelos de Negócio e Relações Institucionais</h3>
+    <p>O contrato de gerenciamento opera sobre uma estrutura preditiva (fluxos formais, medições, cronogramas) com elementos híbridos (emergências, não conformidades, consultas técnicas). Isso exige:</p>
+    <ul>
+      <li>Reconhecer que a função é transversal e técnico-analítica, não executiva — <strong>produz rastreabilidade, não obra</strong>;</li>
+      <li>Endereçar os desalinhamentos de expectativas entre fiscalização e gestão do órgão por meio de comunicação estruturada e definição formal de limites;</li>
+      <li>Tratar empreiteiras como stakeholders <strong>exigentes</strong> (alta urgência, baixo poder) com protocolo específico de engajamento documental;</li>
+      <li>Ativar os stakeholders <strong>adormecidos</strong> (concessionárias, órgãos reguladores) preventivamente em vez de reativamente.</li>
+    </ul>
+  </div>
+
+  <div class="syn-block">
+    <h3><span class="num">4</span>Mapa de Intervenções Priorizadas</h3>
+    <table>
+      <thead>
+        <tr><th>Intervenção</th><th>Tipo</th><th>Impacto Primário</th><th>Cursos Catálogo</th><th>Prazo Sugerido</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Criar cartilha de documentação para empreiteiras</strong></td>
+          <td>Produto de Governança</td>
+          <td>Redução de retrabalho e tempo de triagem</td>
+          <td>UDC - Trabalho Padronizado · UDC - 5S e PDCA</td>
+          <td>Curto prazo</td>
+        </tr>
+        <tr>
+          <td><strong>Implantar checklist de aceitabilidade documental</strong></td>
+          <td>Ferramenta Operacional</td>
+          <td>Padronização da triagem; base para IMR objetivo</td>
+          <td>Excel Avançado · UDC - Trabalho Padronizado</td>
+          <td>Curto prazo</td>
+        </tr>
+        <tr>
+          <td><strong>Capacitar equipe em produtividade e gestão do tempo</strong></td>
+          <td>Desenvolvimento Individual</td>
+          <td>Redução de relatórios entregues com atraso</td>
+          <td>Planejamento do Tempo · Foco e disciplina · Organização e planejamento</td>
+          <td>Curto-médio prazo</td>
+        </tr>
+        <tr>
+          <td><strong>Implantar dashboard de gestão de demandas</strong></td>
+          <td>Tecnologia / PMO</td>
+          <td>Visibilidade do portfólio; rastreabilidade dos prazos</td>
+          <td>Análise de Dados no Power BI · Excel Avançado</td>
+          <td>Médio prazo</td>
+        </tr>
+        <tr>
+          <td><strong>Elaborar Matriz RACI de responsabilidades fiscalização/órgão</strong></td>
+          <td>Produto de Governança</td>
+          <td>Clareza de papéis; redução de dupla análise</td>
+          <td>Reunião Eficaz · UDC - Construção de Matriz de Comunicação</td>
+          <td>Médio prazo</td>
+        </tr>
+        <tr>
+          <td><strong>Workshop de integração e melhoria de processos</strong></td>
+          <td>Capacitação Coletiva</td>
+          <td>Alinhamento de expectativas; integração da equipe</td>
+          <td>Encontro Técnico - Metodologias Ágeis · Trabalho em equipe</td>
+          <td>Médio prazo</td>
+        </tr>
+        <tr>
+          <td><strong>Capacitação técnica em análise de orçamentos e projetos</strong></td>
+          <td>Desenvolvimento Técnico</td>
+          <td>Redução de tempo de análise de aditivos</td>
+          <td>UDC - Composições de Preços · UDC - Cronograma 14 DCMA · Nova Lei de Licitações</td>
+          <td>Médio-longo prazo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight green">
+    <div class="i-label">Conclusão Estratégica do Relatório</div>
+    <p>A transição do modelo reativo para o modelo analítico-estruturado não depende primariamente de contratação de mais pessoas, mas de <strong>três pilares simultâneos</strong>: (1) governança clara de papéis e processos documentais; (2) ferramentas de visibilidade e rastreamento de demandas; e (3) capacitação orientada às lacunas reais identificadas no cruzamento TR × realidade operacional. Os 249 cursos do catálogo institucional já contêm a maioria das intervenções de desenvolvimento necessárias — o que falta é estrutura de priorização e trilhas por cargo, entregáveis que este relatório provê.</p>
+  </div>
+</div>
+
+</div><!-- /page-body -->
+
+<div class="doc-footer">
+  Documento técnico-analítico sanitizado — Mentoring Ciclo 17 · PMI São Paulo &nbsp;|&nbsp; Confidencial — Sem identificação de órgãos, instituições ou servidores (LGPD)
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const buttons = document.querySelectorAll('.nav-bar button');
+  const map = {stakeholders:0, influencia:1, expectativas:2, capacitacao:3, gaps:4, sintese:5};
+  buttons[map[id]].classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
